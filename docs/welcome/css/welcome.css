@@ -117,6 +117,87 @@ pre {
   line-height: 1.4em;
 }
 
+/**
+ * Styles to support usage of Tippy.js tooltips (https://atomiks.github.io/tippyjs)
+ */
+/**
+ * Tippy tooltips have the following base structure:
+ *
+ * <div class="tippy-popper" x-placement="top">
+ *   <div class="tippy-tooltip">
+ *     <div class="tippy-content">
+ *       [[ Content Here ]]
+ *     </div>
+ *   </div>
+ * </div>
+ */
+.tippy-popper {
+  z-index: 9999;
+}
+
+.tippy-popper .popper__arrow {
+  border: 16px solid transparent;
+  content: '';
+  display: block;
+  height: 0;
+  pointer-events: none;
+  position: absolute;
+  width: 0;
+}
+
+.tippy-popper[x-placement^='top'] {
+  margin-bottom: 16px;
+}
+
+.tippy-popper[x-placement^='top'] .popper__arrow {
+  border-bottom: 0;
+  border-top-color: #ffffff;
+  bottom: -16px;
+  left: calc(50% - 16px);
+}
+
+.tippy-popper[x-placement^='bottom'] {
+  margin-top: 16px;
+}
+
+.tippy-popper[x-placement^='bottom'] .popper__arrow {
+  border-bottom-color: #eeeeee;
+  border-top: 0;
+  left: calc(50% - 16px);
+  top: -16px;
+}
+
+.tippy-popper[x-placement^='left'] {
+  margin-right: 16px;
+}
+
+.tippy-popper[x-placement^='left'] .popper__arrow {
+  border-left-color: #ffffff;
+  border-right: 0;
+  margin-top: -16px;
+  right: -16px;
+  top: calc(50% - 16px);
+}
+
+.tippy-popper[x-placement^='right'] {
+  margin-left: 16px;
+}
+
+.tippy-popper[x-placement^='right'] .popper__arrow {
+  border-left: 0;
+  border-right-color: #ffffff;
+  left: -16px;
+  top: calc(50% - 16px);
+}
+
+.tippy-popper .tippy-tooltip {
+  background-color: transparent;
+  padding: 0;
+  max-height: 100%;
+  max-width: 100%;
+  width: 420px;
+}
+
 .shepherd-element, .shepherd-element:after, .shepherd-element:before,
 .shepherd-element *,
 .shepherd-element *:after,
@@ -128,65 +209,6 @@ pre {
 .shepherd-element {
   -webkit-filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
           filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
-  max-height: 100%;
-  max-width: 100%;
-  width: 420px;
-  z-index: 9999;
-}
-
-.shepherd-element .popper__arrow {
-  border: 16px solid transparent;
-  content: '';
-  display: block;
-  height: 0;
-  pointer-events: none;
-  position: absolute;
-  width: 0;
-}
-
-.shepherd-element[x-placement^='top'] {
-  margin-bottom: 16px;
-}
-
-.shepherd-element[x-placement^='top'] .popper__arrow {
-  border-bottom: 0;
-  border-top-color: #ffffff;
-  bottom: -16px;
-  left: calc(50% - 16px);
-}
-
-.shepherd-element[x-placement^='bottom'] {
-  margin-top: 16px;
-}
-
-.shepherd-element[x-placement^='bottom'] .popper__arrow {
-  border-bottom-color: #eeeeee;
-  border-top: 0;
-  left: calc(50% - 16px);
-  top: -16px;
-}
-
-.shepherd-element[x-placement^='left'] {
-  margin-right: 16px;
-}
-
-.shepherd-element[x-placement^='left'] .popper__arrow {
-  border-left-color: #ffffff;
-  border-right: 0;
-  margin-top: -16px;
-  right: -16px;
-  top: calc(50% - 16px);
-}
-
-.shepherd-element[x-placement^='right'] {
-  margin-left: 16px;
-}
-
-.shepherd-element[x-placement^='right'] .popper__arrow {
-  border-left: 0;
-  border-right-color: #ffffff;
-  left: -16px;
-  top: calc(50% - 16px);
 }
 
 .shepherd-element.shepherd-has-title .shepherd-content header {
