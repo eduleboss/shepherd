@@ -40,11 +40,11 @@ describe('Utils', function() {
   });
 
   describe('setupTooltipElem', function() {
-    it('when Popper is undefined, throws error', function() {
+    it('when Tippy is undefined, throws error', function() {
       const Utils = UtilsInjector({
-        'popper.js': undefined
+        'tippy.js': undefined
       });
-      assert.throws(Utils.setupTooltipElem, 'Using the attachment feature of Shepherd requires the Popper.js library');
+      assert.throws(Utils.setupTooltipElem, 'Using the attachment feature of Shepherd requires the Tippy.js library');
     });
   });
 });

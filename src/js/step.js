@@ -99,8 +99,8 @@ export class Step extends Evented {
       'destroy',
       'hide',
       'isOpen',
-      'setupElements',
       'scrollTo',
+      'setupElements',
       'show'
     ]);
     this.setOptions(options);
@@ -318,7 +318,6 @@ export class Step extends Evented {
     }
 
     this.setupTooltipElem();
-    // this._attach();
   }
 
   /**
@@ -350,7 +349,7 @@ export class Step extends Evented {
       this.on(event, handler, this);
     });
 
-    this._setupButtonOpts();
+    this._setupButtons();
   }
 
   /**
@@ -372,7 +371,7 @@ export class Step extends Evented {
    *
    * @private
    */
-  _setupButtonOpts() {
+  _setupButtons() {
     const { buttons } = this.options;
     if (buttons) {
       const buttonsAreDefault = isUndefined(buttons) || isEmpty(buttons);

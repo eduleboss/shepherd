@@ -37,7 +37,7 @@ describe('Step', () => {
       text: 'Another Step'
     });
 
-    // Add more steps for total _setupButtonOpts coverage
+    // Add more steps for total _setupButtons coverage
     instance.addStep('test3', {
       buttons: {
         text: 'Next',
@@ -254,14 +254,14 @@ describe('Step', () => {
       const step = new Step();
       const methods = [
         '_show',
-        'show',
-        'hide',
-        'isOpen',
         'cancel',
         'complete',
-        'scrollTo',
         'destroy',
-        'render'
+        'hide',
+        'isOpen',
+        'scrollTo',
+        'setupElements',
+        'show'
       ];
       methods.forEach((method) => {
         assert.isOk(step[method], `${method} has been bound`);
@@ -345,14 +345,14 @@ describe('Step', () => {
     });
   });
 
-  describe('render()', () => {
+  describe('setupElements()', () => {
     it('calls destroy if element is already set', () => {
       const step = new Step();
       let destroyCalled = false;
       step.el = document.createElement('a');
       step.destroy = () => destroyCalled = true;
-      step.render();
-      assert.isOk(destroyCalled, 'render method called destroy with element set');
+      step.setupElements();
+      assert.isOk(destroyCalled, 'setupElements method called destroy with element set');
     });
 
     it('calls bindAdvance() if advanceOn passed', () => {
@@ -362,7 +362,7 @@ describe('Step', () => {
           advanceOn: '.click-test test'
       });
       const bindFunction = spy(step, 'bindAdvance');
-      step.render();
+      step.setupElements();
 
       assert.ok(bindFunction.called);
     });
@@ -394,9 +394,8 @@ describe('Step', () => {
     });
   });
 
-
   describe('setOptions()', () => {
-    it('calls the function passed in the when option', () => {
+    it('calls event handlers passed in as properties to the `when` option', () => {
       let whenCalled = false;
       const step = new Step('test', {
         when: {
@@ -408,6 +407,15 @@ describe('Step', () => {
       assert.isOk(whenCalled);
     });
 
+    it('sets up buttons', () => {
+      const setupButtonsSpy = spy(Step.prototype, '_setupButtons');
+
+      assert.equal(setupButtonsSpy.callCount, 0);
+
+      new Step('test', {});
+
+      assert.equal(setupButtonsSpy.callCount, 1);
+    });
   });
 
   describe('getTour()', () => {

@@ -1,5 +1,6 @@
 import { isString, isObjectLike, isUndefined, zipObject } from 'lodash';
 import tippy from 'tippy.js';
+import { missingTippy } from './utils/error-messages';
 
 /**
  * TODO rewrite the way items are being added to use more performant documentFragment code
@@ -16,6 +17,7 @@ export function createFromHTML(html) {
  * Parse the position object or string to return the attachment and element to attach to
  * @param {Object|String} position Either a string or object denoting the selector and position for attachment
  * @return {Object} The object with `element` and `on` for the step
+ * @private
  */
 export function _parseAttachToOpts(opts) {
   if (isObjectLike(opts)) {
@@ -59,7 +61,7 @@ export function parseShorthand(obj, props) {
  */
 export function setupTooltipElem() {
   if (isUndefined(tippy)) {
-    throw new Error('Using the attachment feature of Shepherd requires the Tippy.js library');
+    throw new Error(missingTippy);
   }
 
   if (this.tooltipElem) {

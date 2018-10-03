@@ -4,6 +4,7 @@ import { Step } from './step.js';
 import { bindMethods } from './bind.js';
 import tippy from 'tippy.js';
 import { defaults as tooltipDefaults } from './utils/tooltip-defaults';
+import { missingTippy } from './utils/error-messages';
 
 const Shepherd = new Evented();
 
@@ -277,7 +278,7 @@ export class Tour extends Evented {
 
   _setTooltipDefaults() {
     if (isUndefined(tippy)) {
-      throw new Error('Using the attachment feature of Shepherd requires the Tippy.js library');
+      throw new Error(missingTippy);
     }
 
     tippy.setDefaults(tooltipDefaults);
