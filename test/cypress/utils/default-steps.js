@@ -3,7 +3,7 @@ export default function(shepherd) {
     {
       id: 'welcome',
       options: {
-        text: ['Shepherd is a javascript library for guiding users through your app. It uses <a href="https://popper.js.org/">Popper.js</a>, another open source library, to position all of its steps.', 'Popper makes sure your steps never end up off screen or cropped by an overflow. Try resizing your browser to see what we mean.'],
+        text: ['Shepherd is a JavaScript library for guiding users through your app. It uses <a href="https://popper.js.org/">Popper.js</a>, another open source library, to position all of its steps.', 'Popper makes sure your steps never end up off screen or cropped by an overflow. Try resizing your browser to see what we mean.'],
         attachTo: '.hero-welcome bottom',
         classes: 'shepherd shepherd-transparent-text',
         buttons: [

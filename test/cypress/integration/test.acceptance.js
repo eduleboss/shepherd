@@ -23,7 +23,7 @@ describe('Shepherd Acceptance Tests', () => {
           {
             id: 'welcome',
             options: {
-              text: ['Shepherd is a javascript library for guiding users through your app. It uses <a href="https://popper.js.org/">Popper.js</a>, another open source library, to position all of its steps.', 'Popper makes sure your steps never end up off screen or cropped by an overflow. Try resizing your browser to see what we mean.'],
+              text: ['Shepherd is a JavaScript library for guiding users through your app. It uses <a href="https://popper.js.org/">Popper.js</a>, another open source library, to position all of its steps.', 'Popper makes sure your steps never end up off screen or cropped by an overflow. Try resizing your browser to see what we mean.'],
               attachTo: {
                 element: '.hero-welcome',
                 on: 'bottom'
@@ -39,7 +39,7 @@ describe('Shepherd Acceptance Tests', () => {
       tour.start();
       // Step text should be visible
       cy.get('.shepherd-text')
-        .contains('Shepherd is a javascript library').should('be.visible');
+        .contains('Shepherd is a JavaScript library').should('be.visible');
       cy.document().then((document) => {
         assert.deepEqual(document.querySelector('.hero-welcome'), tour.getCurrentStep().target, '.hero-welcome is the target');
       });
@@ -106,7 +106,7 @@ describe('Shepherd Acceptance Tests', () => {
       tour.start();
       // Step one text should be visible
       cy.get('.shepherd-text')
-        .contains('Shepherd is a javascript library').should('be.visible');
+        .contains('Shepherd is a JavaScript library').should('be.visible');
       // Click next
       cy.contains('Next').click();
       // Step two text should be visible
@@ -114,12 +114,12 @@ describe('Shepherd Acceptance Tests', () => {
         .contains('Including Shepherd is easy!').should('be.visible');
       // Step one text should be hidden
       cy.get('.shepherd-text')
-        .contains('Shepherd is a javascript library').should('not.be.visible');
+        .contains('Shepherd is a JavaScript library').should('not.be.visible');
       // Click back
       cy.contains('Back').click();
       // Step one text should be visible again
       cy.get('.shepherd-text')
-        .contains('Shepherd is a javascript library').should('be.visible');
+        .contains('Shepherd is a JavaScript library').should('be.visible');
     });
   });
 

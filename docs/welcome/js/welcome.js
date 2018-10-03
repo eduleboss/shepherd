@@ -16,7 +16,7 @@
     });
 
     shepherd.addStep('welcome', {
-      text: ['Shepherd is a javascript library for guiding users through your app. It uses <a href="https://popper.js.org/">Popper.js</a>, another open source library, to position all of its steps.', 'Popper makes sure your steps never end up off screen or cropped by an overflow. Try resizing your browser to see what we mean.'],
+      text: ['Shepherd is a JavaScript library for guiding users through your app. It uses <a href="https://popper.js.org/">Popper.js</a>, another open source library, to position all of its steps.', 'Popper makes sure your steps never end up off screen or cropped by an overflow. Try resizing your browser to see what we mean.'],
       attachTo: '.hero-welcome bottom',
       classes: 'shepherd shepherd-welcome',
       buttons: [
@@ -78,7 +78,7 @@
     });
     shepherd.addStep('centered-example', {
       title: 'Centered Shepherd Element',
-      text: `But attachment is totally optional! \
+      text: `But attachment is totally optional!\n \
       Without a target, a tour step will create an element that's centered within the view. \
       Check out the <a href="https://shipshapecode.github.io/shepherd/">documentation</a> to learn more.`,
       buttons: [

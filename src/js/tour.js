@@ -56,7 +56,7 @@ export class Tour extends Evented {
    * @return {Step} The newly added step
    */
   addStep(arg1, arg2) {
-    let name, stepOptions;
+    let name, step, stepOptions;
 
     // If we just have one argument, we can assume it is an object of step options, with an id
     if (isUndefined(arg2)) {
@@ -65,8 +65,6 @@ export class Tour extends Evented {
       name = arg1;
       stepOptions = arg2;
     }
-
-    let step;
 
     if (stepOptions instanceof Step) {
       step = stepOptions;
@@ -216,7 +214,6 @@ export class Tour extends Evented {
    * @param {Boolean} forward True if we are going forward, false if backward
    */
   show(key = 0, forward = true) {
-    debugger;
     this._setupActiveTour();
 
     const step = isString(key) ? this.getById(key) : this.steps[key];

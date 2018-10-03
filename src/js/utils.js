@@ -58,7 +58,6 @@ export function parseShorthand(obj, props) {
  * Determines options for the Tippy.js tooltip and initializes it.
  */
 export function setupTooltipElem() {
-  debugger;
   if (isUndefined(tippy)) {
     throw new Error('Using the attachment feature of Shepherd requires the Tippy.js library');
   }
@@ -78,7 +77,50 @@ export function setupTooltipElem() {
 }
 
 /**
- * Generates the hash of options that will be passed to `Tippy`.
+ * Passes `options.attachTo` to `_parseAttachToOpts` to get the correct `attachTo` format
+ * @returns {({} & {element, on}) | ({})}
+ * `element` is a qualified HTML Element
+ * `on` is a string position value
+ */
+export function parseAttachTo() {
+  const options = _parseAttachToOpts(this.options.attachTo) || {};
+  const returnOpts = Object.assign({}, options);
+
+  if (isString(options.element)) {
+    // Can't override the element in user opts reference because we can't
+    // guarantee that the element will exist in the future.
+    try {
+      returnOpts.element = document.querySelector(options.element);
+    } catch(e) {
+      // TODO
+    }
+    if (!returnOpts.element) {
+      console.error(`The element for this Shepherd step was not found ${options.element}`);
+    }
+  }
+
+  return returnOpts;
+}
+
+/**
+ * Generates a `Tippy` instance from a set of base `attachTo` options
+ *
+ * @return {tippy} The final tippy instance
+ * @private
+ */
+function _makeTippyInstance(baseAttachToOptions) {
+  if (!baseAttachToOptions.element) {
+    return _makeCenteredTippy.call(this);
+  }
+
+  const tippyOptions = _makeAttachedTippyOptions.call(this, baseAttachToOptions);
+
+  return tippy.one(baseAttachToOptions.element, tippyOptions);
+}
+
+/**
+ * Generates the hash of options that will be passed to `Tippy` instances
+ * target an element in the DOM.
  *
  * @param {Object} baseAttachToOptions The local `attachTo` options
  * @return {Object} The final tippy options  object
@@ -94,7 +136,7 @@ function _makeAttachedTippyOptions(baseAttachToOptions) {
   // Build the proper settings for tippyOptions.popperOptions (https://atomiks.github.io/tippyjs/#popper-options-option)
   const popperOptsToMerge = {
     arrowElement: this.el.querySelector('.popper__arrow'),
-    positionFixed: true,
+    positionFixed: true
   };
 
   if (this.options.tippyOptions && this.options.tippyOptions.popperOptions) {
@@ -106,7 +148,15 @@ function _makeAttachedTippyOptions(baseAttachToOptions) {
   return resultingTippyOptions;
 }
 
-function _makeCenteredTippy(baseAttachToOptions) {
+/**
+ * Generates a `Tippy` instance for a tooltip that doesn't have a
+ * target element in the DOM -- and thus is positioned in the center
+ * of the view
+ *
+ * @return {tippy} The final tippy instance
+ * @private
+ */
+function _makeCenteredTippy() {
   const tippyOptions = {
     content: this.el,
     placement: 'top',
@@ -115,7 +165,7 @@ function _makeCenteredTippy(baseAttachToOptions) {
 
   const popperOptsToMerge = {
     arrowElement: this.el.querySelector('.popper__arrow'),
-    positionFixed: true,
+    positionFixed: true
   };
 
   tippyOptions.popperOptions = tippyOptions.popperOptions || {};
@@ -145,40 +195,4 @@ function _makeCenteredTippy(baseAttachToOptions) {
   tippyOptions.popperOptions = finalPopperOptions;
 
   return tippy.one(document.body, tippyOptions);
-}
-
-function _makeTippyInstance(baseAttachToOptions) {
-  if (!baseAttachToOptions.element) {
-    return _makeCenteredTippy.call(this, baseAttachToOptions);
-  }
-
-  const tippyOptions = _makeAttachedTippyOptions.call(this, baseAttachToOptions);
-
-  return tippy.one(baseAttachToOptions.element, tippyOptions);
-}
-
-/**
- * Passes `options.attachTo` to `_parseAttachToOpts` to get the correct `attachTo` format
- * @returns {({} & {element, on}) | ({})}
- * `element` is a qualified HTML Element
- * `on` is a string position value
- */
-export function parseAttachTo() {
-  const options = _parseAttachToOpts(this.options.attachTo) || {};
-  const returnOpts = Object.assign({}, options);
-
-  if (isString(options.element)) {
-    // Can't override the element in user opts reference because we can't
-    // guarantee that the element will exist in the future.
-    try {
-      returnOpts.element = document.querySelector(options.element);
-    } catch(e) {
-      // TODO
-    }
-    if (!returnOpts.element) {
-      console.error(`The element for this Shepherd step was not found ${options.element}`);
-    }
-  }
-
-  return returnOpts;
 }

@@ -18,11 +18,10 @@
   z-index: $shepherd-element-z-index;
 
   & .tippy-tooltip {
-    background-color: transparent;
-    padding: 0;
-
+    background-color: rgba(0, 0, 0, 0);
     max-height: $shepherd-element-max-height;
     max-width: $shepherd-element-max-width;
+    padding: 0;
     width: $shepherd-element-width;
   }
 }

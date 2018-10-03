@@ -65,9 +65,6 @@ export class Step extends Evented {
    * @param {string} options.buttons.button.text The HTML text of the button
    * @param {string} options.classes Extra classes to add to the step. `shepherd-theme-arrows` will give you our theme.
    * @param {Object} options.tippyOptions Extra [options to pass to tippy.js]{@link https://atomiks.github.io/tippyjs/#all-options}
-   * @param {HTMLElement|string} options.renderLocation An `HTMLElement` or selector string of the element you want the
-   * tour step to render in. Most of the time, you will not need to pass anything, and it will default to `document.body`,
-   * but this is needed for `<dialog>` and might as well support passing anything.
    * @param {boolean} options.scrollTo Should the element be scrolled to when this step is shown?
    * @param {function} options.scrollToHandler A function that lets you override the default scrollTo behavior and
    * define a custom action to do the scrolling, and possibly other logic.
@@ -186,33 +183,12 @@ export class Step extends Evented {
   }
 
   /**
-   * Attaches final element to default or passed location
-   *
-   * @private
-   * @param {HTMLElement} element The element to attach
-   */
-  _attach() {
-    const element = this.tooltipElem;
-    const { renderLocation } = this.options;
-
-    if (renderLocation) {
-      if (renderLocation instanceof HTMLElement) {
-        return renderLocation.appendChild(element);
-      }
-      if (isString(renderLocation)) {
-        return document.querySelector(renderLocation).appendChild(element);
-      }
-    }
-    return document.body.appendChild(element);
-  }
-
-  /**
    * Creates Shepherd element for step based on options
    *
    * @private
    * @return {HTMLElement} The DOM element for the step tooltip
    */
-  createTooltipContent() {
+  _createTooltipContent() {
     const classes = this.options.classes || '';
     const element = createFromHTML(`<div class='${classes}' data-id='${this.id}'>`);
 
@@ -327,24 +303,6 @@ export class Step extends Evented {
     return this.el && !this.el.hidden;
   }
 
-  // /**
-  //  * Create the element and set up the popper instance
-  //  */
-  // render() {
-  //   if (!isUndefined(this.el)) {
-  //     this.destroy();
-  //   }
-  //   this.el = this.createTooltipContent();
-
-  //   if (this.options.advanceOn) {
-  //     this.bindAdvance();
-  //   }
-
-  //   this._attach();
-
-  //   this.setupTooltipElem();
-  // }
-
   /**
    * Create the element and set up the tippy instance
    */
@@ -353,12 +311,11 @@ export class Step extends Evented {
       this.destroy();
     }
 
-    this.el = this.createTooltipContent();
+    this.el = this._createTooltipContent();
 
     if (this.options.advanceOn) {
       this.bindAdvance();
     }
-
 
     this.setupTooltipElem();
     // this._attach();
@@ -443,7 +400,6 @@ export class Step extends Evented {
     this.trigger('before-show');
 
     if (!this.el) {
-      // this.render();
       this.setupElements();
     }
 
@@ -452,8 +408,6 @@ export class Step extends Evented {
     this.el.style.display = 'block';
 
     document.body.setAttribute('data-shepherd-step', this.id);
-
-    // this.setupTooltipElem();
 
     if (this.options.scrollTo) {
       setTimeout(() => {

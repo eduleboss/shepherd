@@ -165,7 +165,7 @@ describe('Step', () => {
       const step = new Step({
         next: () => advanced = true
       }, {
-        text: ['Shepherd is a javascript library for guiding users through your app. It uses <a href="https://popper.js.org/">Popper.js</a>, another open source library, to position all of its steps.', 'Popper makes sure your steps never end up off screen or cropped by an overflow. Try resizing your browser to see what we mean.'],
+        text: ['Shepherd is a JavaScript library for guiding users through your app. It uses <a href="https://popper.js.org/">Popper.js</a>, another open source library, to position all of its steps.', 'Popper makes sure your steps never end up off screen or cropped by an overflow. Try resizing your browser to see what we mean.'],
         advanceOn: {
           selector: 'a[href="https://popper.js.org/"]',
           event: 'blur'
@@ -462,38 +462,6 @@ describe('Step', () => {
 
       assert.isOk(typeof step.options.text === 'function');
       assert.equal('I am some test text.', content.querySelector('.shepherd-text p').innerHTML);
-    });
-  });
-
-  describe('_attach()', () => {
-    it('uses a passed renderLocation as string', () => {
-      const element = document.createElement('div');
-      const testElement = document.createElement('div');
-      element.classList.add('string-element');
-      testElement.classList.add('test-element');
-      document.body.appendChild(element);
-
-      const step = new Step('test', {
-        renderLocation: '.string-element'
-      });
-
-      step._attach(testElement);
-      assert.isOk(element.querySelector('.test-element'));
-    });
-
-    it('uses a passed renderLocation as an HTML element', () => {
-      const element = document.createElement('div');
-      const renderLocation = document.createElement('div');
-      element.classList.add('html-element');
-      renderLocation.classList.add('render-element');
-      document.body.appendChild(renderLocation);
-
-      const step = new Step('test', {
-        renderLocation
-      });
-
-      step._attach(element);
-      assert.isOk(renderLocation.querySelector('.html-element'));
     });
   });
 });
